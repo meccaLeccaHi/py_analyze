@@ -5,23 +5,28 @@ Created on Mon Feb 20 13:25:15 2017
 @author: root
 """
 
-from plot_beh import plot_beh
 import numpy as np
 #import matplotlib.pyplot as plt
 #import plotly.plotly as py
 from matplotlib import pyplot
-import os, csv, glob
+import os, csv, glob, sys
 
-header_dir = "/home/adam/Desktop/py_stimuli/expEyeTrack/headers/"
+main_dir = "/home/lab/Cloud2/movies/human/LazerMorph/"
+header_dir = main_dir+"headers/"
+fig_dir = main_dir+"py_analyze/behavior/figs/"
+exp_dir = main_dir+"py_stimuli/expEyeTrack/"
 
-header_list = glob.glob(header_dir + '*')
+sys.path.insert(0, exp_dir)
+from plot_beh import plot_beh
 
-header_list = header_list[0:3]
 
-#header_nm = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
-#"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+#header_list = glob.glob(header_dir + '*')
+#
+#header_list = header_list[0:3]
 
-fig_dir = "/home/adam/Desktop/py_stimuli/expEyeTrack/beh_figs/"
+header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+header_list = [header_dir+x+".csv" for x in header_files]
 
 fig = pyplot.figure(facecolor='black')     
 for H_i, H_nm in enumerate(header_list):

@@ -5,23 +5,34 @@ Created on Fri Feb 17 15:17:50 2017
 @author: root
 """
 
-import csv
 import numpy as np
 #import matplotlib.pyplot as plt
 #import plotly.plotly as py
 from matplotlib import pyplot
+import csv, glob, sys
 
-header_dir = "/home/adam/Desktop/py_stimuli/expEyeTrack/headers/"
-header_nm = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+main_dir = "/home/lab/Cloud2/movies/human/LazerMorph/"
+header_dir = main_dir+"headers/"
+fig_dir = main_dir+"py_analyze/behavior/figs/"
+exp_dir = main_dir+"py_stimuli/expEyeTrack/"
+
+sys.path.insert(0, exp_dir)
+from plot_beh import plot_beh
+
+#header_list = glob.glob(header_dir + '*')
+#
+#header_list = header_list[0:3]
+
+header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
 "hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
-fig_dir = "/home/adam/Desktop/py_stimuli/expEyeTrack/beh_figs/"
+header_list = [header_dir+x+".csv" for x in header_files]
 
 fig = pyplot.figure(facecolor='black')     
-for H_i, H_nm in enumerate(header_nm):
+for H_i, H_nm in enumerate(header_list):
     
     f_names = []
     correct = []
-    f = open(header_dir + H_nm + ".csv", 'rb')
+    f = open(H_nm, 'rb')
     try:
         reader = csv.reader(f)
         for row in reader:
@@ -101,7 +112,7 @@ for H_i, H_nm in enumerate(header_nm):
     ax2.tick_params(axis='x', colors='white')
     ax2.tick_params(axis='y', colors='white')    
     
-pyplot.savefig(filename=(fig_dir + "beh_fig_summ.png"),
+pyplot.savefig(filename=(fig_dir + "beh_fig_summ2.png"),
                facecolor=fig.get_facecolor(),transparent=True)
     
 pyplot.close()
