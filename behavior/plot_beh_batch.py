@@ -21,11 +21,14 @@ from plot_beh import plot_beh
 
 
 #header_list = glob.glob(header_dir + '*')
-#
 #header_list = header_list[0:3]
 
-header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
-"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+#header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+#"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+
+header_files = ["hdr03072017_1229","hdr03072017_1244","hdr03092017_1025",
+"hdr03092017_1032"][::-1]
+
 header_list = [header_dir+x+".csv" for x in header_files]
 
 fig = pyplot.figure(facecolor='black')     

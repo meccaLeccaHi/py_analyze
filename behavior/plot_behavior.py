@@ -19,13 +19,19 @@ exp_dir = main_dir+"py_stimuli/expEyeTrack/"
 sys.path.insert(0, exp_dir)
 from plot_beh import plot_beh
 
-header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
-"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+#header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+#"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+
+header_files = ["hdr03072017_1244","hdr03092017_1025",
+"hdr03092017_1032"][::-1] # "hdr03072017_1229",
+
 header_list = [header_dir+x+".csv" for x in header_files]
 
 pyplot.figure()     
 
 for H_i, H_nm in enumerate(header_list):
+    
+    print(H_nm)
     
     f_names = []
     correct = []
@@ -83,6 +89,6 @@ for H_i, H_nm in enumerate(header_list):
     pyplot.xticks(x)
     pyplot.title('Tang traj.')    
     
-pyplot.savefig(filename=(fig_dir + "beh_fig_summ.png"))
+pyplot.savefig(filename=(fig_dir + "beh_fig_summ_patient.png"))
     
 pyplot.close()

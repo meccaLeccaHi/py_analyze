@@ -23,9 +23,15 @@ from plot_beh import plot_beh
 #
 #header_list = header_list[0:3]
 
-header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
-"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+header_files = ["hdr03072017_1244","hdr03092017_1025",
+"hdr03092017_1032"] # "hdr03072017_1229",
+
+#header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+#"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+
 header_list = [header_dir+x+".csv" for x in header_files]
+
+col_steps = 255/(len(header_list)+1)
 
 fig = pyplot.figure(facecolor='black')     
 for H_i, H_nm in enumerate(header_list):
@@ -39,7 +45,7 @@ for H_i, H_nm in enumerate(header_list):
             f_names.append(row[2])
             correct.append(row[9])
     finally:
-        f.close()   
+        f.close()
     
     # Extract identity numbers from video list
     ident_ind = f_names[0].find("identity")+len("identity")
@@ -76,7 +82,7 @@ for H_i, H_nm in enumerate(header_list):
 #    pyplot.clf()
     ax1 = pyplot.subplot(1,2,1,axisbg='k')
     x = np.asarray(range(len(x1)))/(len(x1)-1.0)
-    pyplot.plot(x,x1,color=pyplot.cm.hot(H_i*30),lw=2)
+    pyplot.plot(x,x1,color=pyplot.cm.hot((H_i+1)*col_steps),lw=2)
     pyplot.ylim([0,1])
     pyplot.xticks(x)
     pyplot.title('Radial traj.')
@@ -95,7 +101,7 @@ for H_i, H_nm in enumerate(header_list):
     
     ax2 = pyplot.subplot(1,2,2,axisbg='k')
     x = np.asarray(range(1,len(x2)+1))/float(len(x2))
-    pyplot.plot(x,x2,color=pyplot.cm.hot(H_i*30),lw=2)
+    pyplot.plot(x,x2,color=pyplot.cm.hot((H_i+1)*col_steps),lw=2)
     pyplot.ylim([0,1])
     pyplot.xticks(x)
     pyplot.title('Tang traj.')
@@ -112,7 +118,7 @@ for H_i, H_nm in enumerate(header_list):
     ax2.tick_params(axis='x', colors='white')
     ax2.tick_params(axis='y', colors='white')    
     
-pyplot.savefig(filename=(fig_dir + "beh_fig_summ2.png"),
+pyplot.savefig(filename=(fig_dir + "beh_fig_summ2_patient.png"),
                facecolor=fig.get_facecolor(),transparent=True)
     
 pyplot.close()
