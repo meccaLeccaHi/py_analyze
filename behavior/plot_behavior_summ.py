@@ -9,7 +9,7 @@ import numpy as np
 #import matplotlib.pyplot as plt
 #import plotly.plotly as py
 from matplotlib import pyplot
-import csv, glob, sys
+import csv, sys #, glob
 
 main_dir = "/home/lab/Cloud2/movies/human/LazerMorph/"
 header_dir = main_dir+"headers/"
@@ -23,11 +23,11 @@ from plot_beh import plot_beh
 #
 #header_list = header_list[0:3]
 
-header_files = ["hdr03072017_1244","hdr03092017_1025",
-"hdr03092017_1032"] # "hdr03072017_1229",
+#header_files = ["hdr03072017_1244","hdr03092017_1025",
+#"hdr03092017_1032"] # "hdr03072017_1229",
 
-#header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
-#"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
+header_files = ["hdr02162017_1833","hdr02162017_1825","hdr02162017_1821",
+"hdr02162017_1818","hdr02162017_1815","hdr02162017_1811"][::-1]
 
 header_list = [header_dir+x+".csv" for x in header_files]
 
@@ -75,16 +75,18 @@ for H_i, H_nm in enumerate(header_list):
     tan_results.append(np.mean(map(int, foo[foo!=''])))
     
     
-    
-    x1 = np.asarray(rad_results)
-    x2 = np.asarray(tan_results)
+    x1 = np.asarray(rad_results)*100
+    x2 = np.asarray(tan_results)*100
     
 #    pyplot.clf()
     ax1 = pyplot.subplot(1,2,1,axisbg='k')
-    x = np.asarray(range(len(x1)))/(len(x1)-1.0)
+    x = np.asarray(range(len(x1)))/(len(x1)-1.0)*100
+    pyplot.plot(x,np.tile(25.0,(1,len(x)))[0],'--',color='grey',lw=2)
     pyplot.plot(x,x1,color=pyplot.cm.hot((H_i+1)*col_steps),lw=2)
-    pyplot.ylim([0,1])
+    pyplot.ylim([0,100])
     pyplot.xticks(x)
+    pyplot.xlabel('% identity')
+    pyplot.ylabel('% correct')
     pyplot.title('Radial traj.')
     
     ax1.spines['top'].set_visible(False)
@@ -100,10 +102,12 @@ for H_i, H_nm in enumerate(header_list):
     ax1.tick_params(axis='y', colors='white')
     
     ax2 = pyplot.subplot(1,2,2,axisbg='k')
-    x = np.asarray(range(1,len(x2)+1))/float(len(x2))
+    x = np.asarray(range(1,len(x2)+1))/float(len(x2))*100
+    pyplot.plot(x,np.tile(25.0,(1,len(x)))[0],'--',color='grey',lw=2)
     pyplot.plot(x,x2,color=pyplot.cm.hot((H_i+1)*col_steps),lw=2)
-    pyplot.ylim([0,1])
+    pyplot.ylim([0,100])
     pyplot.xticks(x)
+    pyplot.xlabel('% identity')
     pyplot.title('Tang traj.')
 
     ax2.spines['top'].set_visible(False)
@@ -118,7 +122,7 @@ for H_i, H_nm in enumerate(header_list):
     ax2.tick_params(axis='x', colors='white')
     ax2.tick_params(axis='y', colors='white')    
     
-pyplot.savefig(filename=(fig_dir + "beh_fig_summ2_patient.png"),
+pyplot.savefig(filename=(fig_dir + "beh_fig_summ.png"),
                facecolor=fig.get_facecolor(),transparent=True)
     
 pyplot.close()
