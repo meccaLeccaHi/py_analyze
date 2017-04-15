@@ -26,11 +26,14 @@ def nlx_read(nlx_filename):
                                                                                                
     times : (1, samples) array                                                                            
         Timestamps corresponding to samples in 'cscs'  
+        
+    fs : int value
+        Sampling rate of acquisition hardware (samples/second)
 
     Usage
     -----
     nlx_filename = "/home/lab/Desktop/372-021_LazerMorph/2017-03-07_12-35-46/LFPx256.ncs"
-    [cscs, times] = nlx_read(nlx_filename)                                                                                                                                                                  
+    [cscs, times, fs] = nlx_read(nlx_filename)                                                                                                                                                                  
     """
 
     # Open file
@@ -51,7 +54,7 @@ def nlx_read(nlx_filename):
     times = data['time'] * 1e-6
     
     # Find the sampling frequency (fs)
-    fs = np.unique(data['freq'])[0]
+    fs = data['freq']
     
     # .ncs files have a timestamp for every ~512 data points.
     # Here, we assign timestamps for each data sample based on the sampling frequency
@@ -59,7 +62,7 @@ def nlx_read(nlx_filename):
     # number is set in data['valid']
     this_idx = 0
     n_block = 512.
-    offsets = np.arange(0, n_block / fs, 1. / fs)
+    offsets = np.arange(0, n_block / fs[0], 1. / fs[0])
     times = np.zeros(csc.shape)
     for i, (time, n_valid) in enumerate(zip(times, data['valid'])):
         times[this_idx:this_idx + n_valid] = time + offsets[:n_valid]
@@ -79,4 +82,4 @@ def nlx_read(nlx_filename):
     # Close file
     f.close()
     
-    return cscs, times
+    return cscs, times, fs
