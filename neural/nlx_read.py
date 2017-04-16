@@ -12,8 +12,10 @@ def nlx_read(nlx_filename):
         uint32 - channel number
         uint32 - sample freq
         uint32 - number of valid samples
-        int16 x 512 - actual csc samples                                                  
-                                                                                               
+        int16 x 512 - actual csc samples    
+        
+    For more info on csc files: http://neuralynx.com/techtips/TechTip_mar_2015.html      
+                                            
     Parameters                                                                                
     ----------                                                                                
     nlx_filename : String                                                                          
@@ -32,8 +34,9 @@ def nlx_read(nlx_filename):
 
     Usage
     -----
-    nlx_filename = "/home/lab/Desktop/372-021_LazerMorph/2017-03-07_12-35-46/LFPx256.ncs"
-    [cscs, times, fs] = nlx_read(nlx_filename)                                                                                                                                                                  
+    nlx_filename = "/home/lab/Desktop/372-021_LazerMorph/2017-03-07_12-35-46/LFPx1.ncs"
+    [cscs, times, fs] = nlx_read(nlx_filename)  
+                                                                                                                                                          
     """
 
     # Open file
@@ -51,7 +54,7 @@ def nlx_read(nlx_filename):
     csc = data['csc'].reshape((data['csc'].size,))
     
     # Get times
-    times = data['time'] * 1e-6
+    t_stamps = data['time'] * 1e-6
     
     # Find the sampling frequency (fs)
     fs = data['freq']
@@ -77,9 +80,12 @@ def nlx_read(nlx_filename):
     if analog_to_digital is None:
         raise IOError("ADBitVolts not found in .ncs header for "+nlx_filename)
     
+    # Scalar multiplication of digital values
     cscs = csc*analog_to_digital
     
     # Close file
     f.close()
     
-    return cscs, times, fs
+    pass
+
+    return cscs, t_stamps, fs
