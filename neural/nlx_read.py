@@ -5,7 +5,8 @@ import numpy as np
 def nlx_read(nlx_filename):
     
     """                                                                                       
-    Convert binary Neuralynx data files to decimal form
+    Converts binary Neuralynx data files to decimal form,
+    then applies analog-to-digital conversion factor
 
     The format for a .ncs file:
         uint64 - timestamp in microseconds
@@ -34,7 +35,7 @@ def nlx_read(nlx_filename):
 
     Usage
     -----
-    nlx_filename = "/home/lab/Desktop/372-021_LazerMorph/2017-03-07_12-35-46/LFPx1.ncs"
+    nlx_filename = "/home/lab/Desktop/372-021_LazerMorph/2017-03-07_12-35-46/LFPx19.ncs"
     [cscs, times, fs] = nlx_read(nlx_filename)  
                                                                                                                                                           
     """
@@ -43,8 +44,7 @@ def nlx_read(nlx_filename):
     f = open(nlx_filename, 'rb')
 
     # Neuralynx files have a 16kbyte header
-    header = f.read(2 ** 14)
-    header.strip(b'\x00')
+    header = str(f.read(2 ** 14)).strip('\x00')
     
     dt = np.dtype([('time', '<Q'), ('channel', '<i'), ('freq', '<i'),
                    ('valid', '<i'), ('csc', '<h', (512,))])
@@ -65,6 +65,7 @@ def nlx_read(nlx_filename):
     # number is set in data['valid']
     this_idx = 0
     n_block = 512.
+    
     offsets = np.arange(0, n_block / fs[0], 1. / fs[0])
     times = np.zeros(csc.shape)
     for i, (time, n_valid) in enumerate(zip(times, data['valid'])):
@@ -86,6 +87,4 @@ def nlx_read(nlx_filename):
     # Close file
     f.close()
     
-    pass
-
     return cscs, t_stamps, fs
