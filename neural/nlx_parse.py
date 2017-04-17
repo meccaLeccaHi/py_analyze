@@ -44,6 +44,8 @@ def main():
     Inpt_list = [nlx_read(x) for x in Inpt_fnames] 
 #    CSC_list = [nlx_read(x) for x in glob.glob(tank_dir+'CSC*.ncs')] 
 
+    # Get event codes
+    nlx_read(tank_dir+'Events.nev')
     dig_list = [item[0] for item in LFP_list] # Select only continuously-sampled channels
     dig_time = LFP_list[0][1] # Select only timestamps vectors
     dig_fs = LFP_list[0][2][0] # Select only fs value
