@@ -10,6 +10,7 @@ nlx_parse()
 main_dir = '/home/lab/Cloud2/movies/human/LazerMorph/'
 
 import os
+from scipy import stats
 import numpy as np
 import pandas as pd
 
