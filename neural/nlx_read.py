@@ -4,7 +4,9 @@ import numpy as np
  
 def nlx_read(nlx_filename):
     
-    """                                                                                       
+    """    
+    Loads data stored in the formats used by the Neuralynx recording systems
+                                                                                   
     Converts binary Neuralynx data files to decimal form,
     then applies analog-to-digital conversion factor
 
@@ -40,6 +42,8 @@ def nlx_read(nlx_filename):
                                                                                                                                                           
     """
 
+    print(nlx_filename)
+    
     # Open file
     f = open(nlx_filename, 'rb')
 
@@ -49,6 +53,9 @@ def nlx_read(nlx_filename):
     dt = np.dtype([('time', '<Q'), ('channel', '<i'), ('freq', '<i'),
                    ('valid', '<i'), ('csc', '<h', (512,))])
     data = np.fromfile(f, dt)
+    
+    # Close file
+    f.close()
     
     # Vectorize the csc matrix
     csc = data['csc'].reshape((data['csc'].size,))
@@ -83,8 +90,5 @@ def nlx_read(nlx_filename):
     
     # Scalar multiplication of digital values
     cscs = csc*analog_to_digital
-    
-    # Close file
-    f.close()
     
     return cscs, t_stamps, fs
