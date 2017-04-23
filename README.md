@@ -3,7 +3,7 @@
 #### Python scripts/module for analyzing results of neuroscience/psychophysics experiments. 
 
 These scripts can be divided into two categories:
-#### 1- Neural: 
+#### 1 - Neural: 
 
 **nlxrd** is a Python module to extract data stored in the format of Neuralynx electrophysiology recording equipment.
 Supports reading from following filetypes:
@@ -16,7 +16,7 @@ For more information on Neuralynx file formats, refer to the following:
 
 **nlx_parse** is a data parsing script specific to the LazerMorph experimental conditions.
 
-#### 2- Behavioral:
+#### 2 - Behavioral:
 Use Pyplot to visualize behavioral results of LazerMorph experiment.
 
 
