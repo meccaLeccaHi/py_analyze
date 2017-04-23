@@ -9,6 +9,7 @@ These scripts can be divided into two categories:
 Supports reading from following filetypes:
 * .ncs continous sample files
 * .nev event files  
+
 For more information on Neuralynx file formats, refer to the following:  
 -http://neuralynx.com/research_software/development_software/  
 -http://neuralynx.com/techtips/TechTip_mar_2015.html  
